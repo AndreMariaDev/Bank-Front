@@ -1,0 +1,84 @@
+<div class="animated fadeIn">
+    <form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-lg-3">
+  
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            Account <code>append</code>
+          </div>
+          <div class="card-body">
+              <div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Account Number : </span> {{bankBalance.accountNumber}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Branch : </span> {{bankBalance.branch}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Balance : </span> {{bankBalance.typeAccount}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Amount : </span> {{bankBalance.amount}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Limit : </span> {{bankBalance.limit}}
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            Assets <code>append</code>
+          </div>
+          <div class="card-body">
+              <div style="margin: 0 20%;">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text"> AddedStockMarket : </span> 
+                    <select id="ccmonth" class="form-control" formControlName='addedStockMarket' >
+                      <option *ngFor="let name of enumKeys" [value]="name.values"> {{name.values}} </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text"> Amount : </span> 
+                    <input type='text' size="16" class="form-control" formControlName='amount' (blur)="onBlurAmout($event)">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text">Value : </span> 
+                    <input type='text' formControlName='value' (blur)="onBlurValue($event)">
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSave()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+      </div>
+    </div>
+  </form>
+  </div>

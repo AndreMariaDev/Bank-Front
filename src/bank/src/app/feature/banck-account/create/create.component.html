@@ -1,0 +1,78 @@
+<div class="animated fadeIn">
+    <form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-lg-3">
+
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            Account <code>append</code>
+          </div>
+          <div class="card-body">
+
+              <div style="margin: 0 20%;">
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Account Number : </span> <input type='text' size="16" class="form-control"
+                         formControlName='accountNumber'>
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text"> Branch : </span> <input type='text' size="16" class="form-control"
+                       formControlName='branch'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text">Document : </span> <input type='text'
+                       formControlName='document'>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text"> Type Account : </span>
+                      <select id="ccmonth" class="form-control" formControlName='typeAccount' >
+                        <option *ngFor="let name of enumKeys" [value]="name.values"> {{name.values}} </option>
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text">Amount : </span> <input type='text'
+                         formControlName='amount'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text">Limit : </span> <input type='text'
+                         formControlName='limit'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <span class="input-group-text">Limit : </span>
+                    <label class="md-check">
+                      <input type="radio" value="true" name="limit" formControlName="hasLimit" [checked]="this.formGroup.controls.hasLimit.value" >
+                      Yes
+                    </label>
+
+                    <label class="md-check">
+                      <input type="radio" value="false" name="limit" formControlName="hasLimit" [checked]="!this.formGroup.controls.hasLimit.value">
+                      Not
+                    </label>
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSave()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+      </div>
+    </div>
+  </form>
+  </div>

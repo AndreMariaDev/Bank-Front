@@ -1,0 +1,79 @@
+
+<div class="animated fadeIn">
+    <form [formGroup]="formGroup">
+        <div class="row">
+            <div class="col-lg-3">
+
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        Account <code>append</code>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-text"> Credentials Type : </span> 
+                              <select id="ccTypeUser" class="form-control" formControlName='event'>
+                                <option [value]='1' >BankDraft</option>
+                                <option [value]='2' >BankDeposit</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> targetBank : </span>
+                                <input  type='text' size="16" class="form-control" formControlName='targetBank'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> targetBranch : </span>
+                                <input type='text' size="16" class="form-control" formControlName='targetBranch'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> targetAccount : </span>
+                                <input type='text' size="16" class="form-control" formControlName='targetAccount'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> originBank : </span>
+                                <input type='text' size="16" class="form-control" formControlName='originBank' readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> originBranch : </span>
+                                <input type='text' size="16" class="form-control" formControlName='originBranch' readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> originDocument : </span>
+                                <input
+                                    type='text' size="16" class="form-control" formControlName='originDocument' readonly>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text"> amount : </span>
+                                <input type='number' size="16" class="form-control" formControlName='amount'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid"
+                            [disabled]="!this.formGroup.valid" (click)="onSaveAccount()"><i class="fa fa-dot-circle-o"></i>
+                            Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+    </form>
+</div>

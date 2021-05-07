@@ -5,9 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-// import { TooltipModule } from 'ngx-bootstrap/tooltip';
-// import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AlertModule, AlertConfig } from 'ngx-bootstrap/alert';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,12 @@ import { CreateComponent as CreateAssetsComponent } from '../app/feature/asset/c
 import { ListComponent as ListAssetsComponent } from '../app/feature/asset/list/list.component';
 import { ListComponent as ListPatrimonyComponent } from '../app/feature/patrimony/list/list.component';
 import { CreateComponent as CreateBankComponent } from '../app/feature/banck-account/create/create.component';
+import { ListComponent as ListAccountComponent } from '../app/feature/banck-account/list/list.component';
+import { MessageComponent } from './feature/modal/message/message.component';
+import { ErrorComponent } from './feature/modal/error/error.component';
+import { ListComponent } from './feature/bank-account-history/list/list.component';
+import { TopListComponent } from './feature/asset/top-list/top-list.component';
+import { DepositComponent } from './feature/banck-account/deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +36,13 @@ import { CreateComponent as CreateBankComponent } from '../app/feature/banck-acc
     ListAssetsComponent,
     ListPatrimonyComponent,
     CreateBankComponent,
-    LoginComponent
+    LoginComponent,
+    MessageComponent,
+    ErrorComponent,
+    ListComponent,
+    TopListComponent,
+    ListAccountComponent,
+    DepositComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +52,12 @@ import { CreateComponent as CreateBankComponent } from '../app/feature/banck-acc
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, 
-    // BsDropdownModule.forRoot(),		
-    // TooltipModule.forRoot(),	
-    // ModalModule.forRoot()
+    BsDropdownModule.forRoot(),		
+    TooltipModule.forRoot(),	
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
-  providers: [],
+  providers: [AlertConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

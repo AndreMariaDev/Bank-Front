@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { User } from '../../../models/user';
+import { enumTypeUser, User } from '../../../models/user';
 import { UserService } from '../user-service';
 import { ListBase } from '../../../base/list-base';
+import { QueryOptions } from 'src/app/base/query-options';
+import { UserView } from 'src/app/models/user-view';
 
 @Component({
   selector: 'app-list',
@@ -15,14 +17,26 @@ export class ListComponent extends ListBase<User> {
 
   constructor(appService: UserService,public router: Router) {
     super(appService,["code","name","email","phone","create","isActive"],true)
-    let codeUser = sessionStorage.getItem('UserCode');
-    // if(!codeUser){
-    //   this.router.navigateByUrl('/login');
-    // }
+    this.ongetUser();
    }
 
   ngOnInit(): void {
-    this.onGetAll();
+    this.ongetUser();
+  }
+
+  ongetUser(){
+    let codeUser = sessionStorage.getItem('UserCode');
+    if(!codeUser){
+      this.router.navigateByUrl('/login');
+    }
+    else{
+      this.appService.findGenericAsync(new QueryOptions([{ key: 'codeUser', values: codeUser }]),"User/GetListUserByCode")
+      .subscribe(response=>{
+          this.data = (response as User[]);
+        },error=>{
+          console.log(error.Message);
+      });
+    }
   }
 
 }

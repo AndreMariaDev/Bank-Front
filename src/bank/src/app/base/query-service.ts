@@ -33,7 +33,7 @@ export class QueryService extends Base {
   public GetByFilter<T>(endpoint:string,queryOptions:QueryOptions):Observable<T[]>
   {
       console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
-      debugger;
+      
       return this.httpClient
       .get<T>(`${environment.serverUrl}/${endpoint}?${queryOptions.toQueryString()}`,this.options)
       .pipe(
@@ -45,7 +45,7 @@ export class QueryService extends Base {
   public GetFirstByFilter<T>(endpoint:string,queryOptions:QueryOptions):Observable<T>
   {
       console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
-      debugger;
+      
       return this.httpClient
       .get<T>(`${environment.serverUrl}/${endpoint}?${queryOptions.toQueryString()}`,this.options)
       .pipe(

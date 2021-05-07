@@ -8,6 +8,7 @@ import { CreateBase } from '../../../base/create-base';
 import { QueryOptions,Parameters } from '../../../base/query-options';
 import { Guid } from 'src/app/base/create-guid';
 import { BankBalance } from '../../../models/bank-balance';
+import { UserBank } from 'src/app/models/user-bank';
 
 
 @Component({
@@ -20,10 +21,12 @@ export class CreateComponent extends CreateBase<BankAccount> {
   par:Array<Parameters> = new Array<Parameters>();
   disabledView = false;
   enumKeys = new Array<Parameters>();
+  appServiceBank!:BankAccountService;
+  listUser!:UserBank[];
 
   constructor(appService: BankAccountService,formBuilder : FormBuilder, public router: Router) {
     super(appService,formBuilder,router);
-    debugger;
+    this.appServiceBank = appService;
     let codeUser = sessionStorage.getItem('UserCode');
     // if(!codeUser){
     //   this.router.navigateByUrl('/login');
@@ -31,6 +34,7 @@ export class CreateComponent extends CreateBase<BankAccount> {
     //   this.router.navigateByUrl('/account/update');
     // }
 
+    this.onGetUsers();
     this.onLoadFormGroup();
     this.onSelectItens();
   }
@@ -51,8 +55,15 @@ export class CreateComponent extends CreateBase<BankAccount> {
     this.iconCollapse = this.isCollapsed ? 'icon-arrow-down' : 'icon-arrow-up';
   }
 
+  onGetUsers(){
+    this.appServiceBank.findGenericAllAsync('User/GetListUser').subscribe(response=>{
+      this.listUser = (response as UserBank[]);
+    },error=>{
+      console.log(error.Message);
+    })
+  }
   onLoadFormGroup():void{
-    debugger;
+    
     var guidNew = new Guid();
     this.entity.code = guidNew.uuid();
     let codeUser = sessionStorage.getItem('UserCode');
@@ -77,7 +88,6 @@ export class CreateComponent extends CreateBase<BankAccount> {
     console.log(this.formGroup);
   }
 
-
   onSelectItens(){
     let listKey = new Array<string>();
     let listValues =new Array<object>();
@@ -91,6 +101,23 @@ export class CreateComponent extends CreateBase<BankAccount> {
   }
 
   btnCancel(){
-    this.router.navigateByUrl('/user');
+    this.router.navigateByUrl('/account/create');
+  }
+
+  onSaveAccount(){
+    try {
+      this.onSave();
+      this.router.navigateByUrl('/account/list');
+    } catch (error) {
+      this.router.navigateByUrl('/account/list');
+    }
+  }
+
+  onKeyDown(event:any){
+    debugger;
+    if(event.target.value.length == 11 && event.keyCode!=8){
+      return false
+    } 
+    return true;
   }
 }

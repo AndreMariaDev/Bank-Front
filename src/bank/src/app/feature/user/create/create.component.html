@@ -26,8 +26,17 @@
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <span class="input-group-text">phone : </span> <input type='text'
-                       formControlName='phone'>
+                    <span class="input-group-text">phone : </span> <input type='number' formControlName='phone'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text"> Credentials Type : </span> 
+                    <select id="ccTypeUser" class="form-control" formControlName='typeUser' (change)='onChangeCredential()'>
+                      <option [value]='0' disabled selected>Operator</option>
+                      <option [value]='1' >Accountant</option>
+                      <option [value]='2' >Admin</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -64,7 +73,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSave()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSaveAll()"><i class="fa fa-dot-circle-o"></i> Submit</button>
             <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
           </div>
         </div>

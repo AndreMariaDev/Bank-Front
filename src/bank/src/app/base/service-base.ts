@@ -1,12 +1,12 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { EventEmitter } from '@angular/core'
 
 import { DomainEntity, DomainEntityT } from './domain-entity';
 import { QueryOptions } from './query-options';
 import { Serializer,SerializerT } from './serializer';
-
+import { Base } from './base';
 
 export interface BaseOptionsBanck{
     headers: any;
@@ -21,7 +21,7 @@ export interface AuthenticateResponse {
     token: string;
 }
 
-export class ServiceBase<T extends DomainEntity| DomainEntityT>{
+export class ServiceBase<T extends DomainEntity| DomainEntityT> extends Base{
 
     eventEmitter = new EventEmitter<T>();
     readonly options: BaseOptionsBanck = {
@@ -38,46 +38,71 @@ export class ServiceBase<T extends DomainEntity| DomainEntityT>{
         private endpoint: string,
         private serializer: Serializer | SerializerT,     
     ){
-
+        super();
     }
 
     public getByCodeAsync(code: string):Observable<T>
     {
         return this.httpClient
         .get<T>(`${this.url}/${this.endpoint}/${code}`)
-        .pipe(map((data:any)=> this.serializer.fromJson(data) as T));
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+        )
     }
 
     public findAsync(queryOptions:QueryOptions):Observable<T[]>
     {
+        
         console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
-        debugger;
+        
         return this.httpClient
         .get<T>(`${this.url}/${this.endpoint}?${queryOptions.toQueryString()}`,this.options)
-        .pipe(map((data:any)=> { return data.map((item:any)=> this.serializer.fromJson(item))}));
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+        )
     }
 
     public findByEndpointAsync(endpoint:string,queryOptions:QueryOptions):Observable<T[]>
     {
         console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
-        debugger;
+        
         return this.httpClient
         .get<T>(`${this.url}/${endpoint}?${queryOptions.toQueryString()}`,this.options)
-        .pipe(map((data:any)=> { return data.map((item:any)=> this.serializer.fromJson(item))}));
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+        )
     }
 
     public findGenericAsync(queryOptions:QueryOptions,endpoint:string):Observable<any>
     {
         console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
-        debugger;
+        
         return this.httpClient
         .get<any>(`${this.url}/${endpoint}?${queryOptions.toQueryString()}`,this.options)
-        .pipe(map((data:any)=> { return data}));
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+        )
+    }
+
+    public findGenericAllAsync(endpoint:string):Observable<any>
+    {
+        console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
+        
+        return this.httpClient
+        .get<any>(`${this.url}/${endpoint}`,this.options)
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+        )
     }
 
     public Create(entity:T)
     {
-        debugger;
+        
         console.log(`Bearer ${sessionStorage.getItem('auth_token')}`);
         return this.httpClient
         .post<T>(`${this.url}/${this.endpoint}`,this.serializer.toJson(entity),this.options)

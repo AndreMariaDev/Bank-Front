@@ -12,6 +12,16 @@
           <div class="card-body">
 
               <div style="margin: 0 20%;">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-text"> User : </span> 
+                    <select id="ccmonth" class="form-control" formControlName='userCode' >
+                      <option *ngFor="let item of listUser" [value]="item.userCode"> {{item.name}} </option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="form-group">
                     <div class="input-group">
                       <span class="input-group-text"> Account Number : </span> <input type='text' size="16" class="form-control"
@@ -27,8 +37,8 @@
                 </div>
                 <div class="form-group">
                   <div class="input-group">
-                    <span class="input-group-text">Document : </span> <input type='text'
-                       formControlName='document'>
+                    <span class="input-group-text">Document : </span> <input type='number' maxlength="11" 
+                    (keydown)="onKeyDown($event)" formControlName='document'>
                   </div>
                 </div>
                 <div class="form-group">
@@ -41,14 +51,12 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                      <span class="input-group-text">Amount : </span> <input type='text'
-                         formControlName='amount'>
+                      <span class="input-group-text">Amount : </span> <input type='number' formControlName='amount'>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="input-group">
-                      <span class="input-group-text">Limit : </span> <input type='text'
-                         formControlName='limit'>
+                      <span class="input-group-text">Limit : </span> <input type='number' formControlName='limit'>
                     </div>
                   </div>
                   <div class="form-group">
@@ -66,7 +74,7 @@
               </div>
           </div>
           <div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSave()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+            <button type="submit" class="btn btn-sm btn-primary" *ngIf="this.formGroup.valid" [disabled]="!this.formGroup.valid" (click)="onSaveAccount()"><i class="fa fa-dot-circle-o"></i> Submit</button>
             <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
           </div>
         </div>

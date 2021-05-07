@@ -19,14 +19,15 @@ export class CreateComponent extends CreateBase<User> {
   disabledView = false;
   enumKeys = new Array<Parameters>();
   enumCredType!: enumCredentialsType;
-
+  appServiceUser!:UserService;
   constructor(appService: UserService,formBuilder : FormBuilder, public router: Router) {
     super(appService,formBuilder,router);
-
+    this.appServiceUser = appService;
     let codeUser = sessionStorage.getItem('UserCode');
-    // if(!codeUser){
-    //   this.router.navigateByUrl('/login');
-    // }
+    let admin = sessionStorage.getItem('UserAdmin');
+    if(!admin){
+      this.router.navigateByUrl('/login');
+    }
 
 
     this.onLoadFormGroup();
@@ -56,7 +57,7 @@ export class CreateComponent extends CreateBase<User> {
     if(codeUser){
       this.entity.userCreate = codeUser;
     }
-
+    debugger;
     this.entity.userCredentialsItens = [{
       login: '',
       password: '',
@@ -65,7 +66,7 @@ export class CreateComponent extends CreateBase<User> {
       user: null,
       code: guidNew.uuid(),
       isActive: true,
-      create: (new Date).toDateString(),
+      create: this.formGroup.controls['create'].value,
       userCreate: codeUser? codeUser:guidNew.uuid(),
       update: null,
       userUpdate: null 
@@ -78,6 +79,9 @@ export class CreateComponent extends CreateBase<User> {
     this.formGroup.addControl('isActive',new FormControl(this.entity.isActive, Validators.required));
     this.formGroup.addControl('create',new FormControl(this.entity.create, Validators.required));
     this.formGroup.addControl('userCreate',new FormControl(this.entity.userCreate));
+    this.formGroup.addControl('typeUser',new FormControl(this.entity.typeUser));
+    this.formGroup.addControl('bankAccount',new FormControl(null));
+    this.formGroup.addControl('listAssets',new FormControl(null));
 
     this.formGroup.addControl('userCredentialsItens',new FormGroup({
       'login': new FormControl(this.entity.userCredentialsItens[0].login,Validators.required),
@@ -105,12 +109,17 @@ export class CreateComponent extends CreateBase<User> {
   }
 
   onChangeCredential(){
-    debugger;
+    
     console.log(this.formGroup);
     console.log(this.formGroup.invalid);
   }
 
   btnCancel(){
+    this.router.navigateByUrl('/user');
+  }
+
+  onSaveAll(){
+    this.onSave();
     this.router.navigateByUrl('/user');
   }
 

@@ -9,6 +9,7 @@ export interface User extends DomainEntity {
     name: string;
     email: string;
     phone: string;
+    typeUser: enumTypeUser;
     userCredentialsItens: UserCredentials[] | null;
     bankAccount: BankAccount | null;
     code: string ;
@@ -20,11 +21,17 @@ export interface User extends DomainEntity {
     listAssets: any |null;
 }
 
+export enum enumTypeUser {
+    Umdefined = 0,
+    Accountant = 1,
+    Admin = 2
+}
+
 export class UserSerializer implements Serializer{
     fromJson(json: any): User{
-        debugger;
-        let userCredentialsItensList: Array<UserCredentials> = new Array<UserCredentials>();
         
+        let userCredentialsItensList: Array<UserCredentials> = new Array<UserCredentials>();
+        debugger;
         json.userCredentialsItens?.map((item:any)=>{
             let user : UserCredentials = {
                 login: item.login,
@@ -45,6 +52,7 @@ export class UserSerializer implements Serializer{
             name: json.name,
             email: json.email,
             phone: json.phone,
+            typeUser: json.typeUser,
             userCredentialsItens: userCredentialsItensList,
             bankAccount: null,
             code: json.code,
@@ -59,7 +67,7 @@ export class UserSerializer implements Serializer{
     }
     toJson(json:any):any{
         let userCredentialsItensList: Array<UserCredentials> = new Array<UserCredentials>();
-        
+        debugger;
         let id = new Guid();
         var item = json.userCredentialsItens;
         let user : UserCredentials = {
@@ -70,17 +78,18 @@ export class UserSerializer implements Serializer{
             user: null,
             code: id.uuid() ,
             isActive: item.isActive,
-            create: (new Date()).toString(),
+            create: item.create,
             userCreate: item.userCreate,
             update: item.update ,
             userUpdate: item.userUpdate 
         }
         userCredentialsItensList.push(user);
-        debugger;
+        
         let result = {
             name: json.name,
             email: json.email,
             phone: json.phone,
+            typeUser: json.typeUser,
             userCredentialsItens: userCredentialsItensList,
             bankAccount: null,
             code: json.code,

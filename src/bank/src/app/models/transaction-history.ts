@@ -1,7 +1,7 @@
 import { SerializerT } from "../base/serializer";
 import { DomainEntityT } from '../base/domain-entity';
 
-export class TransactionHistoryResponse extends DomainEntityT {
+export interface TransactionHistoryResponse extends DomainEntityT {
     event: string;
     targetBank: string;
     targetBranch: string;

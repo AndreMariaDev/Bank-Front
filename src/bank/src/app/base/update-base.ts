@@ -29,7 +29,7 @@ export class UpdateBase<T extends DomainEntity>{
         this.entity = new entityT(); 
         this.formGroup = this.formBuilder.group({ });
         let newFormArray = formFields.filter(f=> f.newFormGroup);
-        debugger;
+        
         if (newFormArray.length >0) {
             let newformBuilder = new FormBuilder().group({});
             let name: string = '';
@@ -54,7 +54,7 @@ export class UpdateBase<T extends DomainEntity>{
               this.par.push({ key: 'codeUser', values: codeUser });
               appService.findByEndpointAsync(endpoint,new QueryOptions(this.par)).subscribe(response=>{
                 if(response){
-                  debugger;
+                  
                   let itens = response as T[];
                   this.entity = itens[0];
 

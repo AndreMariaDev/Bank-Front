@@ -10,7 +10,7 @@ export class QueryOptions{
         this.params = params;
     }
     public toQueryString():string {
-        debugger;
+        
         let result = Object 
         .keys(this.params)
         .map(keyFill=> {

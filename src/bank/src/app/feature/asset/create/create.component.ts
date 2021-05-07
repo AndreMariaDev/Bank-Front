@@ -9,6 +9,8 @@ import { QueryService } from '../../../base/query-service';
 import { QueryOptions,Parameters } from '../../../base/query-options';
 import { Guid } from 'src/app/base/create-guid';
 import { BankBalance } from '../../../models/bank-balance';
+import { TopListService } from '../top-list-service';
+import { Traded } from 'src/app/models/traded';
 
 
 @Component({
@@ -27,23 +29,24 @@ export class CreateComponent extends CreateBase<Assets> {
       appService: AssetService,
       private appQueryService: QueryService,
       formBuilder : FormBuilder, 
-      public router: Router) {
+      public router: Router,
+      private topListService:TopListService
+      ) {
     super(appService,formBuilder,router);
 
     let codeUser = sessionStorage.getItem('UserCode');
     codeUser?this.onBankBalance(codeUser):this.router.navigateByUrl('/login');
     this.onLoadFormGroup();
+    
     this.onSelectItens();
   }
   
 
   onBankBalance(codeUser:string){
-    let par:Parameters[] = [{ key: 'codeUser', values: codeUser }];
-    debugger;
-    this.appQueryService.GetFirstByFilter<BankBalance>('BankAccount/GetAmountInAccount',new QueryOptions(par))
+    this.appQueryService.GetFirstByFilter<BankBalance>('BankAccount/GetAmountInAccount',new QueryOptions([{ key: 'codeUser', values: codeUser }]))
       .subscribe(response=>{
         if(response){
-            debugger;
+            
             this.bankBalance = (response as BankBalance)
             this.amountBankBalance = this.bankBalance.amount;
           }
@@ -75,16 +78,16 @@ export class CreateComponent extends CreateBase<Assets> {
   }
 
   onSelectItens(){
-    let listKey = new Array<string>();
-    let listValues =new Array<object>();
-    
-    Object.keys(enumStockMarket).forEach(element => {
-      !isNaN(Number(element))?listKey.push(element):listValues.push(Object(element));
-    });
-
-    for (let index = 0; index < listKey.length; index++) {
-      this.enumKeys.push({key: listKey[index],values: listValues[index]});
-    }    
+    this.topListService.findGenericAsync(new QueryOptions([{ key: '_offset', values: ('1')}, { key: '_limit', values: ('100000')}]),"Traded").subscribe(response=>{
+      debugger;
+      let list = (response as Traded[]);
+      list.forEach(element => {
+        this.enumKeys.push({key: element.addedStockMarket,values: element.value});
+      });
+    },error=>{
+      debugger;
+      console.log(error);
+    })
   }
 
   btnCancel(){
@@ -98,7 +101,22 @@ export class CreateComponent extends CreateBase<Assets> {
       valueAsset = 1;
       event.target.value = 1;
     }
-    let result = this.entity.value * valueAsset;
+    this.enumKeys
+    if(this.formGroup.controls['value'].value){
+      let stock = this.formGroup.controls['addedStockMarket'].value;
+      let list = this.enumKeys.filter(x=> x.key === stock);
+      let value = list[0].values;
+      this.formGroup.controls['value'].setValue(Number(value)*valueAsset);
+      this.entity.value = this.formGroup.controls['value'].value;
+    }else{
+      let stock = this.formGroup.controls['addedStockMarket'].value;
+      let list = this.enumKeys.filter(x=> x.key === stock);
+      let value = list[0].values;
+      this.formGroup.controls['value'].setValue(Number(value)*valueAsset);
+      this.entity.value = this.formGroup.controls['value'].value;
+    }
+
+    let result = this.formGroup.controls['value'].value;
     let sum = this.amountBankBalance - result;
     if(sum > 0){
       this.bankBalance.amount = this.amountBankBalance - result;
@@ -109,7 +127,7 @@ export class CreateComponent extends CreateBase<Assets> {
   }
 
   onBlurValue(event:any){
-    debugger;
+    
     let valueAsset = Number(event.target.value);
     let sum = this.amountBankBalance - valueAsset;
     if(sum > 0){
@@ -120,5 +138,10 @@ export class CreateComponent extends CreateBase<Assets> {
       event.target.value = 0;
       this.entity.value =0;
     }
+  }
+  
+  onSaveAsset(){
+    this.onSave();
+    this.router.navigateByUrl('/assets');
   }
 }

@@ -23,11 +23,11 @@ export class LoginComponent{
    }
 
    onLogin(){
-    debugger;
+    
     console.log(this.login);
     this.appService.Authenticate(this.formGroup.value).subscribe(response=>{
       if(response){
-        debugger;
+        
         sessionStorage.setItem('auth_token',response?.token);
         sessionStorage.setItem('UserCode',response?.code);
         this.router.navigate(['/user']);

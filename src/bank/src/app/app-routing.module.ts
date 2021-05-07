@@ -9,19 +9,26 @@ import { ListComponent as ListUserComponent } from '../app/feature/user/list/lis
 
 import { CreateComponent as CreateAssetsComponent } from '../app/feature/asset/create/create.component';
 import { ListComponent as ListAssetsComponent } from '../app/feature/asset/list/list.component';
+import { TopListComponent } from '../app/feature/asset/top-list/top-list.component'
 
 import { ListComponent as ListPatrimonyComponent } from '../app/feature/patrimony/list/list.component';
 
 import { CreateComponent as CreateBankComponent } from '../app/feature/banck-account/create/create.component';
+import { ListComponent as ListHistoryComponent } from '../app/feature/bank-account-history/list/list.component';
 //import { UpdateComponent as UpdateBankComponent } from '../app/feature/banck-account/update/update.component';
 //import { BanckAccountComponent } from '../app/feature/banck-account/banck-account.component';
+import { ListComponent as ListAccountComponent } from '../app/feature/banck-account/list/list.component';
+import { DepositComponent } from '../app/feature/banck-account/deposit/deposit.component';
 
 const routes: Routes = [
   { path:'assets/create', component: CreateAssetsComponent},
   { path:'assets', component: ListAssetsComponent},
+  { path:'assets/top-five', component: TopListComponent},
 
   { path:'account/create', component: CreateBankComponent},
-  //{ path:'account/update', component: UpdateBankComponent},
+  { path:'account-history/list', component: ListHistoryComponent},
+  { path:'account/list', component: ListAccountComponent},
+  { path:'account/deposit', component: DepositComponent},
 
   //{ path:'account', component: BanckAccountComponent}
 

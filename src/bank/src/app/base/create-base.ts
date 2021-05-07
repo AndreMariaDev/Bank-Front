@@ -35,13 +35,16 @@ export class CreateBase<T extends DomainEntity>{
             console.log(`Itens Invalid`);
         }
         else{
-            debugger;
-            this.appService.Create(this.formGroup.value)
-            .subscribe( response=>{
-                debugger;
+            console.log(JSON.stringify(this.formGroup.value))
+            let requestItem = (this.formGroup.value as T);
+            console.log(JSON.stringify(requestItem))
+            this.appService.Create(requestItem)
+            .subscribe( response=>{ 
+                
                 console.log(response);
             },
             error=>{
+                debugger;
                 // if(error.status == 401){
                 //     sessionStorage.setItem('UserCode','');
                 //     this.router.navigateByUrl('/login');

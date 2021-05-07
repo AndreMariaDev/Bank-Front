@@ -30,7 +30,7 @@ export interface Assets extends DomainEntity {
 
 export class AssetsSerializer implements Serializer{
     fromJson(json: any):Assets{
-        debugger;
+        
         let assets: Assets = {
             addedStockMarket: json.addedStockMarket,
             amount: Number(json.amount),
@@ -47,7 +47,7 @@ export class AssetsSerializer implements Serializer{
         return assets;
     }
     toJson(base:Assets):any{
-        debugger;
+        
         return {
             addedStockMarket: base.addedStockMarket,
             amount: Number(base.amount),

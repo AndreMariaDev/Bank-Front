@@ -28,7 +28,7 @@ export class ListComponent extends ListBase<Patrimony> {
    }
 
   ngOnInit(): void {
-    debugger;
+    
     let codeUser = sessionStorage.getItem('UserCode');
     if(!codeUser){
       this.router.navigateByUrl('/login');
@@ -43,7 +43,7 @@ export class ListComponent extends ListBase<Patrimony> {
     filter.push({ key: 'codeUser', values: (codeUser)});
     this.appService.findAsync(new QueryOptions(filter))
     .subscribe( response =>{
-      this. displayColumnsSubTable = new Array<String>();
+      this.displayColumnsSubTable = new Array<String>();
       this.displayColumnsSubTable.push('addedStockMarket');		
       this.displayColumnsSubTable.push('amount');					
       this.displayColumnsSubTable.push('value');					

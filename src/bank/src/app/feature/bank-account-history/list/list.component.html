@@ -1,0 +1,44 @@
+<div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> Balance
+      </div>
+      <div class="card-body">
+          <div>
+              <span>Acount:</span> <span>{{acount}}</span> <span>Brand:</span><span>{{brand}}</span>
+          </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th *ngFor="let name of displayColumns"> {{name}} </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data">
+              <td>
+                <span *ngIf="item.typeMoving == 2" class="badge badge-success">BankDeposit</span>
+                <span *ngIf="item.typeMoving == 1" class="badge badge-danger">BankDraft</span>
+              </td>
+              <td> {{item.typeMoving}} </td>
+              <td> {{item.amountMoved}} </td>
+              <td> {{item.movingDate}} </td>
+              <td>
+                <span *ngIf="item.typeMoving == 1" class="badge badge-danger">Active</span>
+                <span *ngIf="item.typeMoving == 2" class="badge badge-success">Active</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+          <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>

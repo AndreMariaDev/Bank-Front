@@ -18,7 +18,7 @@ export class ListBase<T extends DomainEntity>{
         displayColumns: Array<string>,
         getall:boolean
     ){
-        debugger;
+        
         if(getall){
             this.par.push({ key: '_offset', values: ('1')});
             this.par.push({ key: '_limit', values: ('100000')});
@@ -27,8 +27,10 @@ export class ListBase<T extends DomainEntity>{
     }
 
     onGetAll():void{
+        
         this.appService.findAsync(new QueryOptions(this.par))
         .subscribe( response =>{
+            debugger;
             this.data = response;
             console.log(response);
         },

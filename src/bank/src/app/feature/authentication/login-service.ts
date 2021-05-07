@@ -15,9 +15,10 @@ import { environment } from '../../../environments/environment';
 
     public Authenticate(entity:any)
     {
-        debugger;
+        console.log(environment);
+        
         return this.httpClient
-        .post<AuthenticateResponse>(`${environment.serverUrl}/${''}/authenticate`,entity)
+        .post<AuthenticateResponse>(`${environment.serverUrl}/${'login'}/authenticate`,entity)
         .pipe(map((data:any)=> {
             if(data){
                 let item: AuthenticateResponse = {
